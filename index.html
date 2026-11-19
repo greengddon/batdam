@@ -47,6 +47,27 @@
  .book>img,.book.spread>img{max-height:calc(100dvh - 104px)!important}
 }
 @media(prefers-reduced-motion:reduce){.menus{transition:none}}
+
+/* Mobile: permanently visible left vertical navigation, no hamburger */
+@media(max-width:700px){
+ :root{--side-width:104px}
+ .mobile-menu-button,.menu-backdrop,.mobile-menu-heading{display:none!important}
+ header{left:var(--side-width)!important;right:0!important;width:calc(100% - var(--side-width))!important;height:54px!important;min-height:54px!important;padding:0 9px!important;gap:5px!important;z-index:20}
+ .brand{font-size:clamp(12px,3.7vw,17px)!important;white-space:nowrap}
+ .controls button{font-size:10px!important;padding:6px 7px!important}
+ .menus,.menus.open{position:fixed!important;top:0!important;bottom:0!important;left:0!important;width:var(--side-width)!important;height:100dvh!important;max-width:var(--side-width)!important;padding:19px 7px 16px!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:center!important;gap:7px!important;transform:none!important;visibility:visible!important;transition:none!important;overflow-x:hidden!important;overflow-y:auto!important;background:#f8fbf5!important;box-shadow:1px 0 7px rgba(30,50,30,.06)!important;border-right:1px solid #d8e3d3;z-index:45!important}
+ .menus:before{content:'CONTENTS';display:block;color:#56724d;font-size:10px;font-weight:800;letter-spacing:1px;text-align:center;margin-bottom:8px}
+ .menus button{width:100%!important;min-height:38px!important;padding:9px 4px!important;font-size:11px!important;line-height:1.35!important;text-align:center!important;white-space:normal!important;word-break:keep-all!important;border-radius:7px!important}
+ #viewport{margin-left:var(--side-width);width:calc(100% - var(--side-width));height:100dvh}
+ .slide{width:100%!important;height:100dvh!important;padding:64px 14px 29px 8px!important;align-items:center!important;justify-content:center!important}
+ .book,.book.spread{max-width:100%!important;max-height:calc(100dvh - 105px)!important}
+ .book>img,.book.spread>img{max-width:100%!important;max-height:calc(100dvh - 105px)!important}
+ .dots{right:3px!important;gap:7px!important}
+ .dot{width:7px!important;height:7px!important}
+ .progress{top:53px!important;left:var(--side-width)!important}
+ .counter{font-size:10px}
+}
+@media(max-width:360px){:root{--side-width:88px}.menus button{font-size:10px!important}.slide{padding-right:11px!important}}
 </style></head><body><button class="mobile-menu-button" id="menuButton" type="button" aria-controls="menus" aria-expanded="false" aria-label="목차 메뉴 열기">☰</button><button class="menu-backdrop" id="menuBackdrop" type="button" aria-label="메뉴 닫기"></button><header><div class="brand">donggubat <small>VOL.15 · WINTER 2026</small></div><nav class="menus" id="menus" aria-label="목차"><div class="mobile-menu-heading">동구밭 · 목차</div></nav><div class="controls"><button id="toggle" aria-label="자동 넘김 일시정지">Ⅱ 일시정지</button></div></header><div class="progress" id="progress"></div><main id="viewport" aria-label="동구밭 웹진"></main><aside class="dots" id="dots" aria-label="페이지 탐색"></aside><script>
 const header=document.querySelector('header');function updateHeaderHeight(){document.documentElement.style.setProperty('--header-height',header.getBoundingClientRect().height+'px')}window.addEventListener('resize',updateHeaderHeight);if('ResizeObserver' in window)new ResizeObserver(updateHeaderHeight).observe(header);updateHeaderHeight();
 const names=["표지", "발행인 메시지 · 목차", "기업 연혁", "CEO 메시지 · 경영철학", "기업 비전", "임원 인터뷰", "사업 및 제품 소개", "대표 제품 · 신제품", "브랜드 경쟁력 · 프로모션", "플로깅 캠페인", "나눔 활동", "오늘의 뉴스", "가꿈지기 인터뷰", "사내 문화 · 챌린지", "뒤표지"];const main=document.querySelector('#viewport'),dots=document.querySelector('#dots'),menus=document.querySelector('#menus'),progress=document.querySelector('#progress'),toggle=document.querySelector('#toggle');let active=0,playing=true,elapsed=0,last=performance.now(),isScrolling=false;const menuItems=[['표지',0],['목차',1],['기업 소개',2],['제품 소개',6],['사내 소식',9],['사내 문화',13],['뒤표지',14]];
